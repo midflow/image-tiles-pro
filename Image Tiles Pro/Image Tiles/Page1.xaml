@@ -20,10 +20,10 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.edit.rest.png" Text="Resize" x:Name="btnResize" Click="btn_Click" IsEnabled="False"/>
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.next.rest.png" Text="Move" x:Name="btnMove" Click="btn_Click" IsEnabled="True"/>
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.basecircle.rest.png" Text="Accept" Click="Accept_Click" />
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.cancel.rest.png" Text="Cancel" />
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.edit.rest.png" Text="Resize" x:Name="btnResize" Click="btn_Click" IsEnabled="true"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.map.position.rest.png" Text="Move" x:Name="btnMove" Click="btn_Click" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/photo.crop.png" Text="Accept" Click="Accept_Click" />
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.cancel.rest.png" Click="btnCancel_Click" Text="Cancel" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

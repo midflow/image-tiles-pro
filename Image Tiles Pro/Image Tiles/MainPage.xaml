@@ -16,11 +16,12 @@ xmlns:mobfox="clr-namespace:MobFox.Ads;assembly=MobFox.Ads"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="False">
+    shell:SystemTray.IsVisible="False" >
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/pin.png" Text="Pin" Click="ApplicationBarIconButton_Click"/>            
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.favs.rest.png" Text="Rate" Click="RateButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="btnAbout" IconUri="/Assets/AppBar/appbar.status.rest.png" Text="About" Click="AboutButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
