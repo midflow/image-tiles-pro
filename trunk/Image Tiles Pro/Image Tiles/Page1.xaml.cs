@@ -24,7 +24,7 @@ namespace Image_Tiles
         private static Version TargetedVersion = new Version(7, 10, 8858);
         public static bool IsTargetedVersion { get { return Environment.OSVersion.Version >= TargetedVersion; } }
 
-        bool isMove = false;
+        bool isMove = true;
         Rectangle r;
 
         int trX = 0;
@@ -41,6 +41,11 @@ namespace Image_Tiles
         {
             InitializeComponent();
             ShowImageTask = false;
+            IApplicationBarIconButton button;
+            button = (IApplicationBarIconButton)ApplicationBar.Buttons[1];
+            button.IsEnabled = !isMove;
+            button = (IApplicationBarIconButton)ApplicationBar.Buttons[0];
+            button.IsEnabled = isMove;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -56,18 +61,31 @@ namespace Image_Tiles
                     ImageName = imgname;
 
                     PhotoChooserTask task = new PhotoChooserTask();
+                    task.ShowCamera = true;
                     ShowImageTask = true;
                     task.Show();
                     task.Completed += new EventHandler<PhotoResult>(task_Completed);
                 }
             }
         }
+        
         void task_Completed(object sender, PhotoResult e)
         {
-            BitmapImage image = new BitmapImage();
-            image.SetSource(e.ChosenPhoto);
-            image1.Source = image;
-            SetPicture();
+            if (e.TaskResult == TaskResult.OK)
+            {
+                BitmapImage image = new BitmapImage();
+                image.SetSource(e.ChosenPhoto);
+                image1.Source = image;
+                SetPicture();
+            }
+            else
+            {
+                Dispatcher.BeginInvoke(() =>
+                {
+                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                });
+                //NavigationService.GoBack();
+            }
         }
 
         void SetPicture()
@@ -128,8 +146,8 @@ namespace Image_Tiles
 
         void rect_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 GeneralTransform gt = ((Rectangle)sender).TransformToVisual(LayoutRoot);
                 Point p = gt.Transform(new Point(0, 0));
 
@@ -168,48 +186,55 @@ namespace Image_Tiles
                 }
                 else
                 {
-                    if (p.X >= 0)
+                    if (e.DeltaManipulation.Translation.X < 0 || croppingRectangle.Width > 50)
                     {
-                        if (p.X <= intermediateValueX)
+                        if (p.X >= 0)
                         {
-                            croppingRectangle.Width -= (int)e.DeltaManipulation.Translation.X;
-                            croppingRectangle.Height = croppingRectangle.Width * height / width;
+                            if (p.X <= intermediateValueX)
+                            {
+                                croppingRectangle.Width -= (int)e.DeltaManipulation.Translation.X;
+                                croppingRectangle.Height = croppingRectangle.Width * height / width;
+                            }
+                            else
+                            {
+                                croppingRectangle.Width -= (p.X - intermediateValueX);
+                                croppingRectangle.Height = croppingRectangle.Width * height / width;
+                            }
                         }
                         else
                         {
-                            croppingRectangle.Width -= (p.X - intermediateValueX);
+                            croppingRectangle.Width -= Math.Abs(p.X);
                             croppingRectangle.Height = croppingRectangle.Width * height / width;
                         }
-                    }
-                    else
-                    {
-                        croppingRectangle.Width -= Math.Abs(p.X);
-                        croppingRectangle.Height = croppingRectangle.Width * height / width;
                     }
 
-                    if (p.Y >= 0)
+                    if (e.DeltaManipulation.Translation.Y < 0 || croppingRectangle.Height > 50)
                     {
-                        if (p.Y <= intermediateValueY)
+                        if (p.Y >= 0)
                         {
-                            croppingRectangle.Height -= (int)e.DeltaManipulation.Translation.Y;
-                            croppingRectangle.Width = croppingRectangle.Height * width / height;
+                            if (p.Y <= intermediateValueY)
+                            {
+                                croppingRectangle.Height -= (int)e.DeltaManipulation.Translation.Y;
+                                croppingRectangle.Width = croppingRectangle.Height * width / height;
+                            }
+                            else
+                            {
+                                croppingRectangle.Height -= (p.Y - intermediateValueY);
+                                croppingRectangle.Width = croppingRectangle.Height * width / height;
+                            }
                         }
                         else
                         {
-                            croppingRectangle.Height -= (p.Y - intermediateValueY);
+                            croppingRectangle.Height -= Math.Abs(p.Y);
                             croppingRectangle.Width = croppingRectangle.Height * width / height;
                         }
                     }
-                    else
-                    {
-                        croppingRectangle.Height -= Math.Abs(p.Y);
-                        croppingRectangle.Width = croppingRectangle.Height * width / height;
-                    }
                 }
-            }
-            finally
-            {
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString()) ;
+            //}
         }
 
         private void btn_Click(object sender, EventArgs e)
@@ -324,6 +349,14 @@ namespace Image_Tiles
             {
                 MessageBox.Show(exc.Message);
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            });
         }
     }
 }

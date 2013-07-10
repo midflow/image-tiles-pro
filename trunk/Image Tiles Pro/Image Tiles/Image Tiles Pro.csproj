@@ -85,6 +85,9 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,12 +142,16 @@
     </Content>
     <Content Include="Assets\AppBar\appbar.edit.rest.png" />
     <Content Include="Assets\AppBar\appbar.favs.rest.png" />
+    <Content Include="Assets\AppBar\appbar.map.position.rest.png" />
     <Content Include="Assets\AppBar\appbar.next.rest.png" />
+    <Content Include="Assets\AppBar\appbar.questionmark.rest.png" />
     <Content Include="Assets\AppBar\appbar.save.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\AppBar\appbar.status.rest.png" />
     <Content Include="Assets\AppBar\appbar.transport.play.rest.png" />
     <Content Include="Assets\AppBar\appbar.upload.rest.png" />
+    <Content Include="Assets\AppBar\photo.crop.png" />
     <Content Include="Assets\AppBar\pin.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -149,6 +160,7 @@
     <Content Include="image.ico" />
     <Content Include="image.png" />
     <Content Include="images.jpg" />
+    <Content Include="P10009031.jpg" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
